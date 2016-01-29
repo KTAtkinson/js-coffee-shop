@@ -48,6 +48,9 @@
     // Set these variables to their DOM elements
 
     var myImage = document.getElementById('coffee-image');
+    var espresso = document.getElementById('espresso');
+    var latte = document.getElementById('latte');
+    var hotChocolate = document.getElementById('hot-chocolate');
     var myRevenueMessage = document.getElementById('revenue');
 
     myImage.setAttribute('src', 'static/coffee_beans.jpg');
@@ -64,16 +67,26 @@
         myImage.setAttribute('src', 'static/coffee_mug.jpg');
     }
 
-    function makeCoffee() {
+    var drinksOrdered = [];
+
+    function makeCoffee(drinkType) {
         showCoffeeMachine();
         setTimeout(showCoffeeMug, 1000);
-        setTimeout(showCoffeeBeans, 1500);
+        setTimeout(showCoffeeBeans, 2500);
+        drinksOrdered.push(drinkType);
+        console.log(drinksOrdered);
+        myRevenueMessage.innerText = revenue();
+    }
 
+    function brewCoffee() {
+        return makeCoffee('brew');
     }
 
 
-    myImage.addEventListener('click', makeCoffee);
-
+    myImage.addEventListener('click', function() {return makeCoffee('brew');});
+    espresso.addEventListener('click', function() {return makeCoffee('espresso');});
+    latte.addEventListener('click', function() {return makeCoffee('latte');});
+    hotChocolate.addEventListener('click', function() {return makeCoffee('hot chocolate');});
 
 
 
@@ -85,6 +98,17 @@
         "latte": 4.15,
         "hot chocolate": 2.50
     };
+
+    function revenue() {
+        var total_revenue = 0;
+
+        for (var i = 0; i < drinksOrdered.length; i ++) {
+            total_revenue += prices[drinksOrdered[i]];
+        }
+
+        return total_revenue;
+
+    }
 
 
 </script>
